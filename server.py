@@ -3,6 +3,7 @@ import smtplib
 from flask import Flask, render_template, request, redirect, url_for
 from models import schooluder_model, fun_tasks_model, upload_task_model, upload_fun_task_model, login_model, task_model, \
     people_model
+from generate_charts import *
 
 
 app = Flask(__name__, static_url_path='', static_folder='static', template_folder='template')
@@ -14,19 +15,19 @@ username = "Shira Levi"
 def root():
     return render_template('index.html')
 
-
 @app.route('/index.html', methods=['POST', 'GET'])
 def home():
     error = None
+    print(request.method) 
     if request.method == 'POST':
         global username
         username = request.form['username']
         if login_model.is_student(username):
-            return redirect(url_for('schedule'))
+            return redirect(url_for('schedule'))  # ה-redirect עובד?
         elif login_model.is_teacher(username):
-            return redirect(url_for('teacher_post_task'))
+            return redirect(url_for('teacher_post_task'))  # ה-redirect עובד?
         else:
-            return redirect(url_for('error_login'))
+            return redirect(url_for('error_login'))  # אם לא נמצא משתמש
     return render_template('index.html', error=error)
 
 
@@ -64,20 +65,23 @@ def send_email(user, pwd, recipient, subject, body):
     TO = recipient if isinstance(recipient, list) else [recipient]
     SUBJECT = subject
     TEXT = body
-    # Prepare actual message
-    message = """From: %s\nTo: %s\nSubject: %s\n\n%s
-    """ % (FROM, ", ".join(TO), SUBJECT, TEXT)
+
+    print(f"FROM: {FROM}, TO: {TO}, SUBJECT: {SUBJECT}, BODY: {TEXT}")
+
+    message = f"From: {FROM}\nTo: {', '.join(TO)}\nSubject: {SUBJECT}\n\n{TEXT}"
     try:
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.ehlo()
         server.starttls()
-        server.login(user, pwd)
+        server.ehlo()  # נוסף קריאה נוספת ל-ehlו
+        server.login(user, pwd)  # ודא שסיסמת אפליקציה כאן
         server.sendmail(FROM, TO, message)
-        server.close()
+        server.quit()
         print('successfully sent the mail')
     except Exception as e:
-        print(e)
+        print(f"Error: {e}")
         print("failed to send mail")
+
 
 
 @app.route('/contacts.html', methods=['GET', 'POST'])
@@ -122,7 +126,10 @@ def teacher_post_task():
         grade = request.form['grade']
         date = request.form['date']
         date = datetime.datetime.strptime(date, '%Y-%m-%d')
-        day = date.weekday()
+        day = (date.weekday() + 1) % 7 + 1
+        print("day and date")
+        print(day)
+        print(date)
         hour = request.form['hour']
         subject = request.form['subject']
         descr = request.form['descr']
@@ -156,6 +163,15 @@ def teacher_post_lesson():
         return redirect(url_for('teacher_post_lesson'))
     return render_template('teacher_schedule.html', error=error)
 
+@app.route('/charts')
+def charts():
+    # יצירת הגרפים
+    create_task_count_chart()
+    create_weekly_hours_chart()
+    task_chart_url = url_for('static', filename='charts/task_count_chart.png')
+    hours_chart_url = url_for('static', filename='charts/weekly_hours_chart.png')
+    return render_template('charts.html', task_chart_url=task_chart_url, hours_chart_url=hours_chart_url)
 
 if __name__ == '__main__':
+    app.debug = True
     app.run(port=3000)

@@ -98,11 +98,11 @@ $(document)
                 <div class="p4">
                   <p style="font-size: 150%;"><strong>{{date}}</strong></p>
                   {% for lesson in week_schedule[day]%}
-                  {%if lesson['hour'].seconds/(60*60) > hour %}
+                  {%if lesson['hour'].second/(60*60) > hour %}
                   <p style="font-size: 130%;">{{lesson['hour']}} {{lesson['teacher']}} <button><a target="_blank" rel="noopener noreferrer" href={{lesson['zoom_link']}} class="link_3">{{lesson['name_']}}</a></button></p>
                   {%endif%}
                   {%endfor%}
-                  {%if week_schedule[day]|length == 0 or  week_schedule[day][week_schedule[day]|length - 1]['hour'].seconds/(60*60) < hour%}
+                  {%if week_schedule[day]|length == 0 or  week_schedule[day][week_schedule[day]|length - 1]['hour'].second/(60*60) < hour%}
                   <p style="font-size: 130%;">The school day is over, good job!</p>
                   <p style="font-size: 130%;">Now is the time to check out your <button><a href="tasks.html" class="link_3">task</a></button>.</p>
                   {%endif%}

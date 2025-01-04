@@ -10,8 +10,10 @@ def get_student_info(name):
 
 
 def get_teacher_email_by_name(name):
+    print("name",name)
     with connection.cursor() as cursor:
         query = f"select email from teacher where name_ = '{name}';"
         cursor.execute(query)
         res = cursor.fetchall()
-        return res[0]['email']
+        print("res",res)
+        return res[0][0]

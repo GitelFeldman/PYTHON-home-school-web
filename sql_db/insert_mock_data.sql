@@ -25,11 +25,11 @@ VALUES
 ('Daivid Turd', 'daividturd@gmail.com', '0505656222')
 insert into subject_
 VALUES
-(Null,'Chava Lev', 'Math', 'https://us04web.zoom.us/j/74707087738?pwd=V3BnbTRoUjh5czdDOUdRVnAzT3lPdz09'),
-(Null,'Moshe Dain', 'English', 'https://us04web.zoom.us/j/74707087738?pwd=V3BnbTRoUjh5czdDOUdRVnAzT3lPdz09'),
-(Null,'Lotem Hiki', 'History', 'https://us04web.zoom.us/j/74707087738?pwd=V3BnbTRoUjh5czdDOUdRVnAzT3lPdz09'),
-(Null,'Vered Shai', 'Art', 'https://us04web.zoom.us/j/74707087738?pwd=V3BnbTRoUjh5czdDOUdRVnAzT3lPdz09'),
-(Null,'Daivid Turd', 'Tanach', 'https://us04web.zoom.us/j/74707087738?pwd=V3BnbTRoUjh5czdDOUdRVnAzT3lPdz09')
+(1,'Chava Lev', 'Math', 'https://us04web.zoom.us/j/74707087738?pwd=V3BnbTRoUjh5czdDOUdRVnAzT3lPdz09'),
+(2,'Moshe Dain', 'English', 'https://us04web.zoom.us/j/74707087738?pwd=V3BnbTRoUjh5czdDOUdRVnAzT3lPdz09'),
+(3,'Lotem Hiki', 'History', 'https://us04web.zoom.us/j/74707087738?pwd=V3BnbTRoUjh5czdDOUdRVnAzT3lPdz09'),
+(4,'Vered Shai', 'Art', 'https://us04web.zoom.us/j/74707087738?pwd=V3BnbTRoUjh5czdDOUdRVnAzT3lPdz09'),
+(5,'Daivid Turd', 'Tanach', 'https://us04web.zoom.us/j/74707087738?pwd=V3BnbTRoUjh5czdDOUdRVnAzT3lPdz09')
 insert into week_schedule
 VALUES
 ('first', 1, '09:00:00',1),

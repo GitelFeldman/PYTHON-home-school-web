@@ -1,12 +1,23 @@
 from models.config import connection
 
 
+# def get_lessons_by_day_and_grade(grade, day):
+#     print("grade: ", grade)
+#     print("day: ", day)
+#     with connection.cursor() as cursor:
+#         g=grade[0]
+#         query = f"select hour, teacher, name_, zoom_link from week_schedule ws JOIN subject_ s ON ws.subject_id = s.id where class = {g} and day_ = {day} order by hour;"
+#         cursor.execute(query)
+#         res = cursor.fetchall()
+#         return res
+
 def get_lessons_by_day_and_grade(grade, day):
     with connection.cursor() as cursor:
-        query = f"select hour, teacher, name_, zoom_link from week_schedule , subject_ where class = '{grade}' and day_ = {day} and subject_id = id order by hour;"
+        query = f"select hour, teacher, name_, zoom_link from week_schedule , subject_ where class = '{grade[0]}' and day_ = {day} and subject_id = id order by hour;"
         cursor.execute(query)
         res = cursor.fetchall()
         return res
+
 
 
 def get_week_schedule_by_class(grade):
@@ -21,7 +32,8 @@ def get_class_by_student(student_name):
         query = f"select class from student where name_ = '{student_name}';"
         cursor.execute(query)
         res = cursor.fetchone()
-        return res['class']
+        ##return res['class']
+        return res
 
 
 def get_key_subject_by_name(subject):
