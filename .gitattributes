@@ -1,0 +1,4 @@
+plaintext
+CopyEdit
+*.py linguist-vendored=true
+*.js linguist-vendored=false
