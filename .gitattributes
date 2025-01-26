@@ -1,2 +1,2 @@
-*.py linguist-language=Python
-*.js linguist-language=JavaScript
+*.py linguist-vendored=false
+*.js linguist-vendored=true
